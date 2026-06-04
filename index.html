@@ -1,0 +1,90 @@
+i-miss-youu
+i-miss-you
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>I Miss You</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #050208;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        .heart-container {
+            position: relative;
+            width: 600px;
+            height: 600px;
+        }
+
+        .text-piece {
+            position: absolute;
+            color: #b056ff;
+            font-size: 11px;
+            font-weight: bold;
+            white-space: nowrap;
+            text-shadow: 0 0 8px rgba(176, 86, 255, 0.8), 0 0 15px rgba(142, 36, 170, 0.5);
+            animation: pulse 3s infinite ease-in-out;
+            opacity: 0.9;
+        }
+
+        /* Subtle heartbeat glowing animation */
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.8; text-shadow: 0 0 8px rgba(176, 86, 255, 0.8); }
+            50% { transform: scale(1.05); opacity: 1; text-shadow: 0 0 18px rgba(176, 86, 255, 1), 0 0 30px rgba(142, 36, 170, 0.8); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="heart-container" id="heart"></div>
+
+    <script>
+        const container = document.getElementById('heart');
+        const textToRepeat = "i miss you";
+        const totalWords = 350; // How dense the heart looks
+
+        // Mathematical Heart Curve Equation to position the text
+        for (let i = 0; i < totalWords; i++) {
+            // Spread points out evenly
+            const t = Math.PI * 2 * (i / totalWords);
+            
+            // Parametric heart formula
+            let x = 16 * Math.pow(Math.sin(t), 3);
+            let y = 13 * Math.cos(t) - 5 * Math.cos(2*t) - 2 * Math.cos(3*t) - Math.cos(4*t);
+            
+            // Scale up the coordinates to fit the screen
+            const scaleX = 16; 
+            const scaleY = 16;
+            
+            const leftPos = 300 + (x * scaleX);
+            const topPos = 250 - (y * scaleY); // Invert Y because screen coordinates go downwards
+
+            // Create the text element
+            const span = document.createElement('span');
+            span.className = 'text-piece';
+            span.innerText = textToRepeat;
+            
+            // Position it
+            span.style.left = `${leftPos}px`;
+            span.style.top = `${topPos}px`;
+            
+            // Give each word a random rotation and subtle animation delay for a chaotic organic look
+            const randomRotation = (Math.random() * 40) - 20; 
+            span.style.transform = `translate(-50%, -50%) rotate(${randomRotation}deg)`;
+            span.style.animationDelay = `${Math.random() * 3}s`;
+            
+            container.appendChild(span);
+        }
+    </script>
+</body>
+</html>
